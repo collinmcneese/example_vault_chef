@@ -3,14 +3,18 @@
 # The InSpec reference, with examples and extensive documentation, can be
 # found at https://docs.chef.io/inspec/resources/
 
-unless os.windows?
-  # This is an example test, replace with your own test.
-  describe user('root'), :skip do
-    it { should exist }
-  end
-end
+control 'example_vault_chef' do
+  impact 0.7
+  title 'Tests for Example Vault Chef cookbook'
+  desc '
+  This cookbook should consume secrets from a Vault server and store
+  the results of the secret query in a file on the local filesystem.
+  '
 
-# This is an example test, replace it with your own test.
-describe port(80), :skip do
-  it { should_not be_listening }
+  # http://inspec.io/docs/reference/resources/file/
+  describe file('/tmp/secretfile') do
+    it { should exist }
+    its('content') { should match /key1_value/ }
+    its('content') { should match /key2_value/ }
+  end
 end

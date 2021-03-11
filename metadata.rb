@@ -1,10 +1,12 @@
 name 'example_vault_chef'
-maintainer 'The Authors'
-maintainer_email 'you@example.com'
+maintainer 'Collin McNeese'
+maintainer_email 'cmcneese@chef.io'
 license 'All Rights Reserved'
 description 'Installs/Configures example_vault_chef'
 version '0.1.0'
 chef_version '>= 15.0'
+
+gem 'vault'
 
 # The `issues_url` points to the location where issues for this cookbook are
 # tracked.  A `View Issues` link will be displayed on this cookbook's page when

@@ -21,15 +21,8 @@ platforms:
       intermediate_instructions:
         - RUN /usr/bin/apt-get update
 
-  - name: centos-8
-    driver:
-      image: dokken/centos-8
-      pid_one_command: /usr/lib/systemd/systemd
-
 suites:
   - name: default
-    run_list:
-      - recipe[example_vault_chef::default]
     verifier:
       inspec_tests:
         - test/integration/default
