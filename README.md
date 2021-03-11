@@ -18,7 +18,6 @@ This repository includes mechanisms for setting up a local development Vault ins
 
 ```plain
 $ chef exec rake -T
-/usr/local/bin/vault
 rake local_vault_config  # Configure a running local vault instance
 rake local_vault_start   # Create a local vault instance running on port 8200
 ```
@@ -28,7 +27,6 @@ rake local_vault_start   # Create a local vault instance running on port 8200
 
     ```plain
     $ chef exec rake local_vault_start
-    /usr/local/bin/vault
     ==> Vault server configuration:
 
                 Api Address: http://0.0.0.0:8200
@@ -49,7 +47,6 @@ rake local_vault_start   # Create a local vault instance running on port 8200
 * Configure the local `vault` instance using the rake task `local_vault_config`:
   ```plain
   $ chef exec rake local_vault_config
-    /usr/local/bin/vault
     Key              Value
     ---              -----
     created_time     2021-03-11T17:06:31.007421Z
