@@ -2,7 +2,7 @@ require 'fileutils'
 
 # Make sure that the vault binary is in PATH
 begin
-  system('which vault') || raise
+  `vault --version` || raise
 rescue
   pp 'Could not find `vault` binanry in PATH, exiting.'
   raise
