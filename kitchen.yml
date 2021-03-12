@@ -4,6 +4,8 @@ driver:
 
 provisioner:
   name: dokken
+  # Uncomment this to read the secret from local `mysecretfile`
+  # encrypted_data_bag_secret_key_path: mysecretfile
 
 transport:
   name: dokken
