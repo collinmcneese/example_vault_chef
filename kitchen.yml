@@ -43,6 +43,8 @@ suites:
     attributes:
       example_vault_chef:
         vault_token: encrypted-data-bag-from-bag
+    provisioner:
+      encrypted_data_bag_secret_key_path: test/integration/encrypted_data_bag_secret_key
   - name: encrypted-data-bag-from-file
     verifier:
       inspec_tests:
