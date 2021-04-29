@@ -22,7 +22,7 @@ vault_token = case node['example_vault_chef']['vault_token']
                 end.run_action(:create)
 
                 # Reads the first line of a file
-                ::File.read(node['example_vault_chef']['vault_token_file']).split()[0] if File.exist?(node['example_vault_chef']['vault_token_file'])
+                File.read(node['example_vault_chef']['vault_token_file']).split()[0] if File.exist?(node['example_vault_chef']['vault_token_file'])
               when 'encrypted-data-bag-from-bag'
                 # Fetches the encrypted data_bag secret key from a data_bag and then uses that encryption key to read the
                 #  Vault secret token from the `encrypted_tokens` data_bag.
