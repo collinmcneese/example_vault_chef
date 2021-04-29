@@ -1,5 +1,9 @@
-default['example_vault_chef']['vault_server']       = 'http://10.0.0.21:8200'
-default['example_vault_chef']['vault_path']         = 'secret/data/demo'
-default['example_vault_chef']['vault_approle']      = 'chef-role'
-default['example_vault_chef']['vault_token']        = 'data-bag'
-default['example_vault_chef']['api_secret_server']  = 'http://10.0.0.21:10811'
+default['example_vault_chef']['vault_server']             = 'http://10.0.0.21:8200'
+default['example_vault_chef']['vault_path']               = 'secret/data/demo'
+default['example_vault_chef']['vault_approle']            = 'chef-role'
+default['example_vault_chef']['vault_token']              = 'data-bag'
+default['example_vault_chef']['api_secret_server']        = 'http://10.0.0.21:10811'
+
+# used with 'token-file' option of 'vault_token' attribute
+default['example_vault_chef']['vault_token_file']         = '/etc/chef/vault_token_file'
+default['example_vault_chef']['vault_token_file_content'] = 's.miv0qNkvsdjff2kb9xnifwWF'

@@ -29,6 +29,13 @@ suites:
     attributes:
       example_vault_chef:
         vault_token: data-bag
+  - name: token-file
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
+      example_vault_chef:
+        vault_token: token-file
   - name: secret-from-api
     verifier:
       inspec_tests:
