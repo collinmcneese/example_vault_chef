@@ -53,7 +53,8 @@ vault_data = get_hashi_vault_object(
   node['example_vault_chef']['vault_path'],
   node['example_vault_chef']['vault_server'],
   vault_token,
-  node['example_vault_chef']['vault_approle']
+  node['example_vault_chef']['vault_approle'],
+  node['example_vault_chef']['vault_namespace'],
 ).data[:data]
 
 # Log the secret contents to show what the contents look like as a string
