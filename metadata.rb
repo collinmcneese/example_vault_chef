@@ -1,7 +1,7 @@
 name 'example_vault_chef'
 maintainer 'Collin McNeese'
 maintainer_email 'cmcneese@chef.io'
-license 'All Rights Reserved'
+license 'Apache-2.0'
 description 'Installs/Configures example_vault_chef'
 version '0.1.0'
 chef_version '>= 15.0'
