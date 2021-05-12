@@ -7,4 +7,4 @@ default['example_vault_chef']['vault_namespace']          = nil
 
 # used with 'token-file' option of 'vault_token' attribute
 default['example_vault_chef']['vault_token_file']         = '/etc/chef/vault_token_file'
-default['example_vault_chef']['vault_token_file_content'] = 's.miv0qNkvsdjff2kb9xnifwWF'
+default['example_vault_chef']['vault_token_file_content'] = 's.vMeXen8KH2Nt8NohP8kDJtes'

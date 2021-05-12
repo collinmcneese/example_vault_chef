@@ -49,7 +49,7 @@ vault_token = case node['example_vault_chef']['vault_token']
               end
 
 # Use the get_hashi_vault_object helper from secrets_management to fetch secret data.
-vault_data = get_hashi_vault_object(
+node.run_state['vault_data'] = get_hashi_vault_object(
   node['example_vault_chef']['vault_path'],
   node['example_vault_chef']['vault_server'],
   vault_token,
@@ -58,15 +58,15 @@ vault_data = get_hashi_vault_object(
 ).data[:data]
 
 # Log the secret contents to show what the contents look like as a string
-log vault_data.to_s do
+log node.run_state['vault_data'].to_s do
   level :info
 end
 
 # Use the secret data obtained from Vault for populating our configuration file
 file '/tmp/secretfile' do
   content <<~SECFILE
-    key1 value: #{vault_data[:key1]}
-    key2 value: #{vault_data[:key2]}
+    key1 value: #{node.run_state['vault_data'][:key1]}
+    key2 value: #{node.run_state['vault_data'][:key2]}
   SECFILE
   owner 'root'
   group 'root'
