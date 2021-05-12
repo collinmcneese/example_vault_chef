@@ -54,7 +54,7 @@ node.run_state['vault_data'] = get_hashi_vault_object(
   node['example_vault_chef']['vault_server'],
   vault_token,
   node['example_vault_chef']['vault_approle'],
-  node['example_vault_chef']['vault_namespace'],
+  node['example_vault_chef']['vault_namespace']
 ).data[:data]
 
 # Log the secret contents to show what the contents look like as a string
@@ -68,6 +68,14 @@ file '/tmp/secretfile' do
     key1 value: #{node.run_state['vault_data'][:key1]}
     key2 value: #{node.run_state['vault_data'][:key2]}
   SECFILE
+  owner 'root'
+  group 'root'
+  mode '0755'
+  action :create
+end
+
+template '/tmp/my_application_config' do
+  source 'example.yml.erb'
   owner 'root'
   group 'root'
   mode '0755'
