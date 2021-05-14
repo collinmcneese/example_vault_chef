@@ -2,7 +2,7 @@
 # Cookbook:: example_vault_chef
 # Recipe:: default
 #
-# Copyright:: 2021, Collin McNeese, All Rights Reserved.
+# Copyright:: 2021, Collin McNeese
 
 vault_token = case node['example_vault_chef']['vault_token']
               when 'data-bag'

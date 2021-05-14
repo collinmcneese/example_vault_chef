@@ -2,7 +2,6 @@
 # Cookbook:: example_vault_chef
 # Recipe:: default
 #
-# Copyright:: 2021, Collin McNeese, All Rights Reserved.
 
 # Log the secret contents to show what the contents look like as a string
 log node.run_state['vault_data'].to_s do
