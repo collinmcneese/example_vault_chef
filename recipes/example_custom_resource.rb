@@ -5,7 +5,6 @@
 
 # uses the custom resource secret_hashicorp_vault to fetch data from vault target and saves as
 #  node.run_state['my_app_secret']
-
 secret_hashicorp_vault 'my_app_secret' do
   vault_address         node['example_vault_chef']['vault_server']
   vault_namespace       nil
@@ -40,10 +39,6 @@ template '/tmp/my_application_config_from_custom_resource' do
   owner 'root'
   group 'root'
   mode '0755'
-  # variables(
-  #   user: lazy { node.run_state['my_app_secret'][:key1] },
-  #   password: lazy { node.run_state['my_app_secret'][:key2] }
-  # )
   variables lazy {
     {
       user: node.run_state['my_app_secret'][:key1],
