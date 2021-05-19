@@ -11,10 +11,14 @@ control 'example_vault_chef' do
   the results of the secret query in a file on the local filesystem.
   '
 
-  # http://inspec.io/docs/reference/resources/file/
-  describe file('/tmp/secretfile') do
-    it { should exist }
-    its('content') { should match /key1_value/ }
-    its('content') { should match /key2_value/ }
+  ['/tmp/secretfile',
+    '/tmp/my_application_config',
+    '/tmp/secretfile_from_custom_resource',
+    '/tmp/my_application_config_from_custom_resource'].each do |f|
+    describe file(f) do
+      it { should exist }
+      its('content') { should match /key1_value/ }
+      its('content') { should match /key2_value/ }
+    end
   end
 end
