@@ -22,19 +22,23 @@ examples <<~DOC
 DOC
 
 property :vault_address, String, required: true,
-  description: ''
+  description: 'Address of the target vault server, example https://Vault-FQDN.localdomain:8200'
 property :vault_namespace, String,
-  description: ''
+  description: 'Vault namespace to use, if required.'
 property :vault_path, String,
-  description: ''
+  description: 'Path to the secret data which should be fetched from the Vault server'
 property :vault_role, String,
-  description: ''
+  description: 'Vault app-role name to use, if required.'
 property :vault_token, String, required: true,
-  description: ''
-property :attribute_target, [String, Array], name_property: true,
-  description: ''
+  description: 'Vault token to use for authentication.'
+# TODO: Add Array support for attribute_target for nested hash storage
+property :attribute_target, String, name_property: true,
+  description: 'Target attribute to store data retrieved from vault.  Will be stored as a node.run_state attribute within the target space.
+                Example:
+                attribute_target "my_attr" --> node.run_state["my_attr"]
+                '
 property :ssl_verify, [true, false], default: true,
-  description: ''
+  description: 'Enable SSL verification of target vault_address when connecting.'
 
 action_class do
   # see chef_magic cookbook for details on get_hashi_vault_object and other references
@@ -76,6 +80,8 @@ action :fetch do
   vault_token = new_resource.vault_token
   attribute_target = new_resource.attribute_target
   ssl_verify = new_resource.ssl_verify
+
+  log "Fetching Vault data from #{new_resource.vault_address}"
 
   node.run_state[attribute_target] = get_hashi_vault_object(
     vault_path,

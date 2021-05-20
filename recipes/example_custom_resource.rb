@@ -16,7 +16,8 @@ secret_hashicorp_vault 'my_app_secret' do
 end
 
 # Log the secret contents to show what the contents look like as a string
-log node.run_state['my_app_secret'].to_s do
+log 'vault_data' do
+  message lazy { node.run_state['my_app_secret'].to_s }
   level :info
 end
 
