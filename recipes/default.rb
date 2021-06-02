@@ -3,6 +3,8 @@
 # Recipe:: default
 #
 
+puts ENV['TEST_KITCHEN']
+
 node.run_state['vault_token'] = case node['example_vault_chef']['vault_token']
                                 when 'data-bag'
                                   # Fetches the token/secretid to read from Vault via data bag
@@ -17,7 +19,7 @@ node.run_state['vault_token'] = case node['example_vault_chef']['vault_token']
                                     owner 'root'
                                     group 'root'
                                     mode '0600'
-                                    only_if { ENV['TEST_KITCHEN'] }
+                                    only_if { ENV['TEST_KITCHEN'] == '1' }
                                   end.run_action(:create)
 
                                   # Reads the first line of a file
