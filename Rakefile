@@ -15,7 +15,7 @@ end
 Rake::TaskManager.record_task_metadata = true
 
 task :default do
-  Rake.application.options.show_tasks = :tasks  # this solves sidewaysmilk problem
+  Rake.application.options.show_tasks = :tasks # this solves sidewaysmilk problem
   Rake.application.options.show_task_pattern = //
   Rake.application.display_tasks_and_comments
 end
@@ -59,4 +59,6 @@ task :local_vault_config do
   setup_commands.each do |cmd|
     system(cmd)
   end
+  # vault_token_secret = `vault token create -policy=chef-role-token`
+  # vault_token_secret.split.select { |x| x =~ /^?\./ }
 end
