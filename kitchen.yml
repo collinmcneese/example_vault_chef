@@ -14,16 +14,16 @@ verifier:
   name: inspec
 
 platforms:
-  # - name: ubuntu-20.04
-  #   driver:
-  #     image: dokken/ubuntu-20.04
-  #     pid_one_command: /bin/systemd
-  #     intermediate_instructions:
-  #       - RUN /usr/bin/apt-get update
-  - name: almalinux-8
+  - name: ubuntu-20.04
     driver:
-      image: dokken/almalinux-8
-      pid_one_command: /usr/lib/systemd/systemd
+      image: dokken/ubuntu-20.04
+      pid_one_command: /bin/systemd
+      intermediate_instructions:
+        - RUN /usr/bin/apt-get update
+  # - name: almalinux-8
+  #   driver:
+  #     image: dokken/almalinux-8
+  #     pid_one_command: /usr/lib/systemd/systemd
 
 suites:
   - name: default
@@ -32,7 +32,11 @@ suites:
         - test/integration/default
     attributes:
       example_vault_chef:
-        vault_token: data-bag
+        vault_token_method: data-bag
+        vault_token_method_options:
+          vault_approle: chef-role
+          data_bag: approle_tokens
+          data_bag_item: default
         run_examples: true
   - name: token-file
     verifier:
@@ -40,23 +44,35 @@ suites:
         - test/integration/default
     attributes:
       example_vault_chef:
-        vault_token: token-file
+        vault_token_method: token-file
+        vault_token_method_options:
+          vault_approle: chef-role
+          vault_token_file: /etc/chef/vault_token_file
+          vault_token_file_content: s.4XUxQV6EjxyrdFVU3F1otVdU
         run_examples: true
-  - name: secret-from-api
-    verifier:
-      inspec_tests:
-        - test/integration/default
-    attributes:
-      example_vault_chef:
-        vault_token: secret-from-api
-        run_examples: true
+  # - name: secret-from-api
+  #   verifier:
+  #     inspec_tests:
+  #       - test/integration/default
+  #   attributes:
+  #     example_vault_chef:
+  #       vault_token_method: secret-from-api
+  #       vault_token_method_options:
+  #         vault_approle: chef-role
+  #       run_examples: true
   - name: encrypted-data-bag-from-bag
     verifier:
       inspec_tests:
         - test/integration/default
     attributes:
       example_vault_chef:
-        vault_token: encrypted-data-bag-from-bag
+        vault_token_method: encrypted-data-bag-from-bag
+        vault_token_method_options:
+          vault_approle: chef-role
+          key_data_bag: encrypted_data_bag_keys
+          key_data_bag_item: default
+          encrypted_data_bag: encrypted_tokens
+          encrypted_data_bag_item: default
         run_examples: true
     provisioner:
       encrypted_data_bag_secret_key_path: test/integration/encrypted_data_bag_secret_key
@@ -66,5 +82,11 @@ suites:
         - test/integration/default
     attributes:
       example_vault_chef:
-        vault_token: encrypted-data-bag-from-file
+        vault_token_method: encrypted-data-bag-from-file
+        vault_token_method_options:
+          vault_approle: chef-role
+          encrypted_data_bag_secret_file: /tmp/keyfile
+          encrypted_data_bag_secret_file_content: rb3ug9/VTo876vYrdvj8TyHDf54HeoUPwUbjtUXQqjXDKByR1etC3Af+WLpvPw9eBqRa6BMfnR3sJ+v3Ch5j8E7g8QLX6G8tEtsSjFAq9Vk4wQulRT/mGSBii+OlyMP470FSYgpcI/mVJ9sRqTXQ9jXPUMrXEanFJVAZ8TtsyVTw3LrYI/QNrPPoUUJFu1JWEVYsAl/i9zZfiMntZ+2X4k/1G/eo86tad+mbghyuod+T0bIQUFrt6c0wL/iFGYvNzwzAaik2OVTa4zntTsEmnOJo0x3Ls3BqfXyVxNCWnSRVdmbsCgLJiq+EByHTd7s7oDKR3jKexxbmaJBwN6ZBB4Y1IUi0zM10DtU+zDFd6k56uXq+aQ9MrlC5KjsU3BoKofE0fM9DU6Ts5DKJnHYaOzIKZzkkxficWFvHph+Luxjxtl/aEs2fYYt2OVn0Evu1lhDtb7gZZH11wSSwM8BCuVu6oDalZFKcPFyQQin/CJelGWNrZemqJSoZqkNRJG0yTk/InCQCxf5hmj66iZosbmCjqMvcjRNwao8gXjv2PA9QS6t3oAiliMyRvQGHzSyDblWGTHPkpT1wzP7/I9a6xywL+mHBkwIee+1PyyKbhFwCFuWLD9q/jYQJ7TZrHZBHmRVSycwIiacCnBIuhPDIIoKasvi/E2YbPe5Ss7FrMws=
+          encrypted_data_bag: encrypted_tokens
+          encrypted_data_bag_item: default
         run_examples: true

@@ -1,9 +1,9 @@
 {
   "id": "default",
   "chef-role": {
-    "encrypted_data": "33pQWF3MYEOdUv0Mu8wpNtndYYi6TU2EdrmjZG6t3Ha9IgaKvhaklrQN1vxm\nnwSrNBnDXXLNyw==\n",
-    "iv": "nPNF+viz91Xgjd1k\n",
-    "auth_tag": "WbcH+HLRJAEJATL3emK2JQ==\n",
+    "encrypted_data": "YtWJvVHwsMYPYWfGHU3TsfyZrnuq9NceWg72oYk3NAV8YzaJ98dAmvlSWVA8\nGWI64hcXBB2JWQ==\n",
+    "iv": "ZevSold557klL1bi\n",
+    "auth_tag": "ueJyc+fJLCZ17ZVzVr3ulw==\n",
     "version": 3,
     "cipher": "aes-256-gcm"
   }
