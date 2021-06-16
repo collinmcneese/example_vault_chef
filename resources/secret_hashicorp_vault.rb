@@ -5,7 +5,7 @@ provides :secret_hashicorp_vault
 
 unified_mode true
 
-description 'Use the **secret_hashicorp_vault** resource to fetch data from a HashiCorp Vault provider using a token and approle.'
+description 'Use the **secret_hashicorp_vault** resource to fetch data from a HashiCorp Vault provider using a token and optionally an approle and/or namespace.'
 examples <<~DOC
   ```ruby
   # Fetch secret information from a HashiCorp Vault instance using a token and app-role inline
