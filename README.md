@@ -37,6 +37,7 @@ Chef Infra Custom Resource which can be used to fetch data from a HashiCorp Vaul
 Example Usage:
 
   ```ruby
+  # Fetch secret information from a HashiCorp Vault instance using a token and app-role inline
   secret_hashicorp_vault 'my_app_secret' do
     vault_address         'https://Vault-FQDN:8200'
     vault_namespace       'my/namespace'
@@ -48,13 +49,14 @@ Example Usage:
     action                :fetch
   end
 
+  # Fetch secret information from a HashiCorp Vault instance using the vault_token_method property, providing logic for how to obtain the token for initial Vault connectivity.
   secret_hashicorp_vault 'my_app_secret_with_token_method' do
     vault_address               'https://Vault-FQDN:8200'
     vault_namespace             'my/namespace'
     vault_path                  'secret/data/name'
     vault_approle               'my-app-role'
-    vault_token_method          'from-file'
-    vault_token_method_options  {'vault_token_file' => '/path/to/token/file'}
+    vault_token_method          'token-file'
+    vault_token_method_options({ 'vault_token_file' => '/path/to/token/file' })
     attribute_target            'my_app_secret'
     ssl_verify                  true
     action                      :fetch

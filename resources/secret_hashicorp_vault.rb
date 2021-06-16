@@ -8,6 +8,7 @@ unified_mode true
 description 'Use the **secret_hashicorp_vault** resource to fetch data from a HashiCorp Vault provider using a token and approle.'
 examples <<~DOC
   ```ruby
+  # Fetch secret information from a HashiCorp Vault instance using a token and app-role inline
   secret_hashicorp_vault 'my_app_secret' do
     vault_address         'https://Vault-FQDN:8200'
     vault_namespace       'my/namespace'
@@ -19,6 +20,7 @@ examples <<~DOC
     action                :fetch
   end
 
+  # Fetch secret information from a HashiCorp Vault instance using the vault_token_method property, providing logic for how to obtain the token for initial Vault connectivity.
   secret_hashicorp_vault 'my_app_secret_with_token_method' do
     vault_address               'https://Vault-FQDN:8200'
     vault_namespace             'my/namespace'
