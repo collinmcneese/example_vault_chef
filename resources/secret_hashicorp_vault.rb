@@ -123,7 +123,7 @@ action :fetch do
 
                     # Populate the vault_token_file during Test Kitchen, if needed
                     file vault_token_file do
-                      content node['example_vault_chef']['vault_token_file_content'].to_s unless vault_token_file_content.nil?
+                      content vault_token_file_content.to_s
                       only_if { ENV['TEST_KITCHEN'] == '1' }
                     end.run_action(:create)
 

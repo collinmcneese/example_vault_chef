@@ -56,7 +56,7 @@ suites:
   #     example_vault_chef:
   #       vault_token_method: secret-from-api
   #       vault_token_method_options:
-  #         api_secret_server: http://localhost:10811
+  #         api_secret_server: http://host.docker.internal:10811
   #       run_examples: true
   - name: encrypted-data-bag-from-bag
     verifier:
