@@ -11,8 +11,8 @@
 #   vault_namespace             'my/namespace'
 #   vault_path                  'secret/data/name'
 #   vault_role                  'my-app-role'
-#   vault_token_method          'from-file'
-#   vault_token_method_options  {'vault_token_file' => '/path/to/token/file'}
+#   vault_token_method          'token-file'
+#   vault_token_method_options({ 'vault_token_file' => '/path/to/token/file' })
 #   attribute_target            'my_app_secret'
 #   ssl_verify                  true
 #   action                      :fetch
