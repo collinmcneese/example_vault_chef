@@ -10,7 +10,7 @@
 #   vault_address               'https://Vault-FQDN:8200'
 #   vault_namespace             'my/namespace'
 #   vault_path                  'secret/data/name'
-#   vault_role                  'my-app-role'
+#   vault_approle               'my-app-role'
 #   vault_token_method          'token-file'
 #   vault_token_method_options({ 'vault_token_file' => '/path/to/token/file' })
 #   attribute_target            'my_app_secret'
@@ -21,7 +21,7 @@ secret_hashicorp_vault 'my_app_secret' do
   vault_address               node['example_vault_chef']['vault_server']
   vault_namespace             nil
   vault_path                  node['example_vault_chef']['vault_path']
-  vault_role                  node['example_vault_chef']['vault_approle']
+  vault_approle               node['example_vault_chef']['vault_approle']
   vault_token_method          node['example_vault_chef']['vault_token_method']
   vault_token_method_options  node['example_vault_chef']['vault_token_method_options']
   ssl_verify                  true

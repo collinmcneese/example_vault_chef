@@ -39,7 +39,7 @@ property :vault_namespace, String,
   description: 'Vault namespace to use, if required.'
 property :vault_path, String,
   description: 'Path to the secret data which should be fetched from the Vault server'
-property :vault_role, String,
+property :vault_approle, String,
   description: 'Vault app-role name to use, if required.'
 property :vault_token, String,
   description: 'Vault token to use for authentication.'
@@ -96,6 +96,7 @@ action_class do
 end
 
 action :fetch do
+  vault_approle = new_resource.vault_approle
   # Fetch the vault token to be used for authentication for fetching secrets
   vault_token = if new_resource.vault_token
                   log 'Using vault_token property'
@@ -111,8 +112,7 @@ action :fetch do
                                raise("value is required for vault_token_method_options['data_bag']")
                     data_bag_item = new_resource.vault_token_method_options['data_bag_item'] ||
                                     raise("value is required for vault_token_method_options['data_bag_item']")
-                    vault_approle = new_resource.vault_token_method_options['vault_approle'] ||
-                                    raise("value is required for vault_token_method_options['vault_approle']")
+                    vault_approle = new_resource.vault_approle
                     data_bag_item(data_bag, data_bag_item)[vault_approle]['token']
                   when 'token-file'
                     # Fetches the token/secretid from a file on the filesystem of the server
@@ -140,8 +140,7 @@ action :fetch do
                                          raise("value is required for vault_token_method_options['encrypted_data_bag']")
                     encrypted_data_bag_item = new_resource.vault_token_method_options['encrypted_data_bag_item'] ||
                                               raise("value is required for vault_token_method_options['encrypted_data_bag_item']")
-                    vault_approle = new_resource.vault_token_method_options['vault_approle'] ||
-                                    raise("value is required for vault_token_method_options['vault_approle']")
+                    vault_approle = new_resource.vault_approle
                     key_content = data_bag_item(key_data_bag, key_data_bag_item)['key'].strip()
                     data_bag_item(encrypted_data_bag, encrypted_data_bag_item, key_content)[vault_approle]['token']
                   when 'encrypted-data-bag-from-file'
@@ -155,8 +154,7 @@ action :fetch do
                                          raise("value is required for vault_token_method_options['encrypted_data_bag']")
                     encrypted_data_bag_item = new_resource.vault_token_method_options['encrypted_data_bag_item'] ||
                                               raise("value is required for vault_token_method_options['encrypted_data_bag_item']")
-                    vault_approle = new_resource.vault_token_method_options['vault_approle'] ||
-                                    raise("value is required for vault_token_method_options['vault_approle']")
+                    vault_approle = new_resource.vault_approle
 
                     # Mock up creating the token_file for test-kitchen only
                     file encrypted_data_bag_secret_file do
@@ -172,8 +170,8 @@ action :fetch do
                     api_secret_server = new_resource.vault_token_method_options['api_secret_server'] ||
                                         raise("value is required for vault_token_method_options['api_secret_server']")
                     api_data = api_json_fetch(api_secret_server.to_s)
-                    vault_approle = new_resource.vault_token_method_options['vault_approle'] ||
-                                    raise("value is required for vault_token_method_options['vault_approle']")
+                    vault_approle = new_resource.vault_approle
+
                     api_data[vault_approle]['token']
                   end # end case
                 else
@@ -185,7 +183,6 @@ action :fetch do
   vault_address = new_resource.vault_address
   vault_namespace = new_resource.vault_namespace
   vault_path = new_resource.vault_path
-  vault_role = new_resource.vault_role
   attribute_target = new_resource.attribute_target
   ssl_verify = new_resource.ssl_verify
 
@@ -195,7 +192,7 @@ action :fetch do
     vault_path,
     vault_address,
     vault_token,
-    vault_role,
+    vault_approle,
     vault_namespace,
     ssl_verify
   ).data[:data]

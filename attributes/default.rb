@@ -5,7 +5,6 @@ default['example_vault_chef']['vault_token_method']         = 'data-bag'
 default['example_vault_chef']['vault_token_method_options'] = {
   'data_bag'      => 'approle_tokens',
   'data_bag_item' => 'default',
-  'vault_approle' => 'chef-role',
 }
 default['example_vault_chef']['api_secret_server']          = 'http://host.docker.internal:10811'
 default['example_vault_chef']['vault_namespace']            = nil
