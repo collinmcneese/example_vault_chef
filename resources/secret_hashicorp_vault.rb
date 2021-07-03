@@ -205,6 +205,5 @@ action :fetch do
   rescue => err
     log 'Unable to fetch data from vault, exception returned'
     log "#{err}"
-    node.run_state[attribute_target] = nil
   end
 end
