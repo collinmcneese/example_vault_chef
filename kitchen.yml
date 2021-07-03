@@ -46,7 +46,7 @@ suites:
         vault_token_method: token-file
         vault_token_method_options:
           vault_token_file: /etc/chef/vault_token_file
-          vault_token_file_content: s.4XUxQV6EjxyrdFVU3F1otVdU
+          vault_token_file_content: s.CO4JmM6AzAYlgJywEct35kjg
         run_examples: true
   # - name: secret-from-api
   #   verifier:

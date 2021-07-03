@@ -17,19 +17,26 @@ def get_hashi_vault_object(vault_path, vault_address, vault_token, vault_role = 
   Vault.ssl_verify = false
 
   if vault_role # Authenticate to Vault using the role_id
-    approle_id = Vault.approle.role_id(vault_role)
-    secret_id = Vault.approle.create_secret_id(vault_role).data[:secret_id]
-    Vault.auth.approle(approle_id, secret_id)
+    begin
+      approle_id = Vault.approle.role_id(vault_role)
+      secret_id = Vault.approle.create_secret_id(vault_role).data[:secret_id]
+      Vault.auth.approle(approle_id, secret_id)
+    rescue => err
+      log 'Unable to fetch data from vault, exception returned when trying to authenticate with approle'
+      log "#{err}"
+    end
   end
 
   # Attempt to read the secret
-  secret = Vault.logical.read(vault_path)
-  # Chef::Log.warn(secret)
-  if secret.nil?
-    raise "Could not read secret '#{vault_path}'!"
-  else
-    secret
+  begin
+    secret = Vault.logical.read(vault_path)
+  rescue => err
+    log 'Unable to fetch data from vault, exception returned when trying to obtain data'
+    log "#{err}"
   end
+
+  # return the secret object
+  secret
 end
 
 # Set the vault token using the defined methods
@@ -78,13 +85,15 @@ node.run_state['vault_token_example_recipe'] = case node['example_vault_chef']['
                                                end
 
 # Use the get_hashi_vault_object helper from secrets_management to fetch secret data.
-node.run_state['vault_data_example_recipe'] = get_hashi_vault_object(
+vault_response_object = get_hashi_vault_object(
   node['example_vault_chef']['vault_path'],
   node['example_vault_chef']['vault_server'],
   node.run_state['vault_token_example_recipe'],
   node['example_vault_chef']['vault_approle'],
   node['example_vault_chef']['vault_namespace']
-).data[:data]
+)
+
+node.run_state['vault_data_example_recipe'] = vault_response_object.data[:data] if vault_response_object.respond_to?(:data)
 
 # Log the secret contents to show what the contents look like as a string
 log node.run_state['vault_data_example_recipe'].to_s do
@@ -94,13 +103,14 @@ end
 # Use the secret data obtained from Vault for populating our configuration file
 file '/tmp/secretfile' do
   content <<~SECFILE
-    key1 value: #{node.run_state['vault_data_example_recipe'][:key1]}
-    key2 value: #{node.run_state['vault_data_example_recipe'][:key2]}
+    key1 value: #{node.run_state['vault_data_example_recipe'][:key1] if node.run_state['vault_data_example_recipe']}
+    key2 value: #{node.run_state['vault_data_example_recipe'][:key2] if node.run_state['vault_data_example_recipe']}
   SECFILE
   owner 'root'
   group 'root'
   mode '0755'
   action :create
+  not_if { node.run_state['vault_data_example_recipe'].nil? }
 end
 
 template '/tmp/my_application_config' do
@@ -115,4 +125,5 @@ template '/tmp/my_application_config' do
     }
   }
   action :create
+  not_if { node.run_state['vault_data_example_recipe'].nil? }
 end

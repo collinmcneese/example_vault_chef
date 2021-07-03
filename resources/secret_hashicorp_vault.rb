@@ -1,4 +1,4 @@
-# vault_secret_fetch
+# secret_hashicorp_vault
 
 resource_name :secret_hashicorp_vault
 provides :secret_hashicorp_vault
@@ -59,6 +59,7 @@ property :vault_token_method_options, Hash,
 # TODO: Add Array support for attribute_target for nested hash storage
 property :attribute_target, String, name_property: true,
   description: 'Target attribute to store data retrieved from vault.  Will be stored as a node.run_state attribute within the target space.
+                Defaults to the resource name if not provided.
                 Example:
                 attribute_target "my_attr" --> node.run_state["my_attr"]
                 '
@@ -190,12 +191,19 @@ action :fetch do
 
   log "Fetching Vault data from #{new_resource.vault_address}"
 
-  node.run_state[attribute_target] = get_hashi_vault_object(
-    vault_path,
-    vault_address,
-    vault_token,
-    vault_approle,
-    vault_namespace,
-    ssl_verify
-  ).data[:data]
+  begin
+    vault_response_object = get_hashi_vault_object(
+      vault_path,
+      vault_address,
+      vault_token,
+      vault_approle,
+      vault_namespace,
+      ssl_verify
+    )
+
+    node.run_state[attribute_target] = vault_response_object.data[:data] if vault_response_object.respond_to?(:data)
+  rescue => err
+    log 'Unable to fetch data from vault, exception returned'
+    log "#{err}"
+  end
 end

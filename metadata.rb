@@ -3,7 +3,7 @@ maintainer 'Collin McNeese'
 maintainer_email 'cmcneese@chef.io'
 license 'Apache-2.0'
 description 'Installs/Configures example_vault_chef'
-version '0.5.2'
+version '0.5.3'
 chef_version '>= 15.0'
 
 gem 'vault'

@@ -38,14 +38,15 @@ end
 file '/tmp/secretfile_from_custom_resource' do
   content lazy {
     <<~SECFILE
-    key1 value: #{node.run_state['my_app_secret'][:key1]}
-    key2 value: #{node.run_state['my_app_secret'][:key2]}
+    key1 value: #{node.run_state['my_app_secret'][:key1] if node.run_state['my_app_secret']}
+    key2 value: #{node.run_state['my_app_secret'][:key2] if node.run_state['my_app_secret']}
     SECFILE
   }
   owner 'root'
   group 'root'
   mode '0755'
   action :create
+  not_if { node.run_state['my_app_secret'].nil? }
 end
 
 template '/tmp/my_application_config_from_custom_resource' do
@@ -60,4 +61,5 @@ template '/tmp/my_application_config_from_custom_resource' do
     }
   }
   action :create
+  not_if { node.run_state['my_app_secret'].nil? }
 end
