@@ -46,18 +46,18 @@ suites:
         vault_token_method: token-file
         vault_token_method_options:
           vault_token_file: /etc/chef/vault_token_file
-          vault_token_file_content: s.CO4JmM6AzAYlgJywEct35kjg
+          vault_token_file_content: s.yeGpBxRr9BrU5WK6wg34Ub0U
         run_examples: true
-  # - name: secret-from-api
-  #   verifier:
-  #     inspec_tests:
-  #       - test/integration/default
-  #   attributes:
-  #     example_vault_chef:
-  #       vault_token_method: secret-from-api
-  #       vault_token_method_options:
-  #         api_secret_server: http://host.docker.internal:10811
-  #       run_examples: true
+  - name: secret-from-api
+    verifier:
+      inspec_tests:
+        - test/integration/default
+    attributes:
+      example_vault_chef:
+        vault_token_method: secret-from-api
+        vault_token_method_options:
+          api_secret_server: http://host.docker.internal:10811
+        run_examples: true
   - name: encrypted-data-bag-from-bag
     verifier:
       inspec_tests:
