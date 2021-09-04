@@ -190,7 +190,7 @@ action :fetch do
   log "Fetching Vault data from #{new_resource.vault_address}"
 
   begin
-    raise("Unable to determine vault_token, nil value") unless vault_token
+    raise('Unable to determine vault_token, nil value') unless vault_token
 
     vault_response_object = get_hashi_vault_object(
       vault_path,
