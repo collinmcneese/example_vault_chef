@@ -14,4 +14,4 @@ default['example_vault_chef']['vault_token_file']           = '/etc/chef/vault_t
 
 # This is populated in this example for usage with test kitchen.
 #  Sensitive data should not be stored as a regular node attibute in a real environment.
-default['example_vault_chef']['vault_token_file_content']   = 's.yeGpBxRr9BrU5WK6wg34Ub0U'
+default['example_vault_chef']['vault_token_file_content']   = 's.W310Zjf0e2gL5NzDUwi2hxaH'

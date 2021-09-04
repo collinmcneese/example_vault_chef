@@ -181,8 +181,6 @@ action :fetch do
                   raise 'Neither vault_token or vault_token_method were specified, one must have a value to fetch secret values from Vault instance.'
                 end
 
-  raise('Unable to determine vault_token, nil value') unless vault_token
-
   vault_address = new_resource.vault_address
   vault_namespace = new_resource.vault_namespace
   vault_path = new_resource.vault_path
@@ -192,6 +190,8 @@ action :fetch do
   log "Fetching Vault data from #{new_resource.vault_address}"
 
   begin
+    raise("Unable to determine vault_token, nil value") unless vault_token
+
     vault_response_object = get_hashi_vault_object(
       vault_path,
       vault_address,

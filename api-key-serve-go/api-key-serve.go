@@ -9,7 +9,7 @@ import (
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	fmt.Fprintf(w, `{"chef-role": { "token": "s.yeGpBxRr9BrU5WK6wg34Ub0U"}}`)
+	fmt.Fprintf(w, `{"chef-role": { "token": "s.W310Zjf0e2gL5NzDUwi2hxaH"}}`)
 }
 
 func main() {
