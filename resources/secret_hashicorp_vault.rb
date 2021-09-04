@@ -203,7 +203,12 @@ action :fetch do
 
     node.run_state[attribute_target] = vault_response_object.data[:data] if vault_response_object.respond_to?(:data)
   rescue => err
-    log 'Unable to fetch data from vault, exception returned'
-    log "#{err}"
+    log 'Unable to fetch data from vault, exception returned' do
+      level :warn
+    end
+
+    log "#{err}" do
+      level :warn
+    end
   end
 end
