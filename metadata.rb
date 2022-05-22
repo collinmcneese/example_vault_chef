@@ -1,6 +1,6 @@
 name 'example_vault_chef'
 maintainer 'Collin McNeese'
-maintainer_email 'cmcneese@chef.io'
+maintainer_email 'collin@mydevsandbox.com'
 license 'Apache-2.0'
 description 'Installs/Configures example_vault_chef'
 version '0.5.5'
